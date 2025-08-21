@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   postgres:
@@ -24,18 +24,24 @@ services:
       - "8080:8080"
       - "8888:8888"
     volumes:
-      - ./extracted/airflow/dags:/opt/airflow/dags:ro
-      - ./extracted/github:/home/kiwilytics/Desktop/github:ro
+      # Main DAGs folder (read/write)
+      - ./extracted/airflow/dags:/opt/airflow/dags
+      # Custom DAGs folder (inside Airflow DAGs)
       - ./dags:/opt/airflow/dags/custom
+      # Other folders
+      - ./extracted/github:/home/kiwilytics/Desktop/github:ro
       - ./notebooks:/home/kiwilytics/notebooks
       - ./data:/home/kiwilytics/data
     environment:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://kiwilytics:kiwilytics@postgres:5432/retaildb
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      # Include custom DAGs folder
+      - AIRFLOW__CORE__DAGS_FOLDER=/opt/airflow/dags,/opt/airflow/dags/custom
     depends_on:
       postgres:
         condition: service_healthy
 
 volumes:
   postgres_data:
+

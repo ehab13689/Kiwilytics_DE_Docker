@@ -13,10 +13,15 @@ RUN apt-get update && apt-get install -y \
 # Install Python packages
 RUN pip install --no-cache-dir \
     apache-airflow==2.7.2 \
+    pendulum==2.1.2 \
     pandas==2.1.3 \
     matplotlib==3.8.2 \
     psycopg2-binary==2.9.9 \
     jupyter==1.0.0
+
+
+RUN pip install Flask-Session
+
 
 # Create user and directories
 RUN useradd -m -u 1000 kiwilytics && \

@@ -1,0 +1,4 @@
+# Only if you need extra packages
+pendulum==2.1.2
+psycopg2-binary
+

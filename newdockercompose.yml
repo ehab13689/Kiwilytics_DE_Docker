@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:15
@@ -26,9 +24,9 @@ services:
     volumes:
       - ./extracted/airflow/dags:/opt/airflow/dags:ro
       - ./extracted/github:/home/kiwilytics/Desktop/github:ro
-      - ./dags:/opt/airflow/dags/custom
-      - ./notebooks:/home/kiwilytics/notebooks
-      - ./data:/home/kiwilytics/data
+      - ./dags:/opt/airflow/dags/custom:cached
+      - ./notebooks:/home/kiwilytics/notebooks:cached
+      - ./data:/home/kiwilytics/data:cached
     environment:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://kiwilytics:kiwilytics@postgres:5432/retaildb
@@ -39,3 +37,4 @@ services:
 
 volumes:
   postgres_data:
+
